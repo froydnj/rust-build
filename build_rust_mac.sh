@@ -23,7 +23,10 @@ make install
 popd
 
 # Package the toolchain for upload.
+# We build separate packages for the compiler itself and the standard
+# libraries for cross-compiles.
 pushd ${WORKSPACE}
-tar cvjf rustc.tar.bz2 rustc/*
-python tooltool.py add --visibility=public --unpack rustc.tar.bz2
+tar cvjf rustc.tar.bz2 rustc/bin/* rustc/share/*
+tar cvjf rust-stdlib.tar.bz2 rustc/lib/rustlib/*
+python tooltool.py add --visibility=public --unpack rustc.tar.bz2 rust-stdlib.tar.bz2
 popd
